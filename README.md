@@ -3,8 +3,6 @@
     Un programa que permite aplicar el algoritmo de CYK sobre una gramatica en forma normal de Chomsky.
 </p>
 
-## Guía para el usuario [here](https://github.com/GilmarAmezquita/equivalent_minimum_automata/blob/c2ff14d95a2b2f2e4414c21d84b9ed5fc8036c59/doc/Instrucciones%20para%20usuario.pdf)
-
 
 
 ## Technologies Used
