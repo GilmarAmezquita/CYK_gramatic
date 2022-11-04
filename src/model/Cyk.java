@@ -47,5 +47,16 @@ public class Cyk {
 				}
 			}
 		}
+		
+		printTable();
+	}
+	
+	public void printTable() {
+		for(int i = 0; i < subStrings.length-1; i++) {
+			for(int j = 0; j < subStrings.length-1; j++) {
+				System.err.println(subStrings[i][j] + " ");
+			}
+			System.out.println("\n");
+		}
 	}
 }
