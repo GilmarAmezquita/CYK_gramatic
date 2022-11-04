@@ -16,5 +16,6 @@ public class Main {
 		variables.add('C');
 		
 		Cyk testing = new Cyk(null, null, null);
+		
 	}
 }
