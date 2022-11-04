@@ -17,6 +17,8 @@ public class Cyk {
 		this.variables = variables;
 		this.inputString = inputString;
 		productionVariable = new HashMap<>();
+		fillHashMap();
+		fillSubStringTable();
 	}
 	
 	private void fillHashMap() {
@@ -31,32 +33,38 @@ public class Cyk {
 	
 	private void fillSubStringTable() {
 		
-		subStrings = new String[variables.size()][variables.size()];
-		int sizeOfInput = inputString.length()-1;
+		int sizeOfInput = inputString.length();
+		subStrings = new String[sizeOfInput][sizeOfInput];
 		int aux = 0;
 		boolean isComplete = false;
-		
+				
 		for(int i = 0; i < sizeOfInput; i++) {
-			for(int j = 1;j < sizeOfInput && !isComplete; j++) {
+			for(int j = 0;j < sizeOfInput && !isComplete; j++) {
 	
-				aux = i+j;
-				if(aux < sizeOfInput) {
+				aux = i+j+1;
+				if(aux <= sizeOfInput) {					
 					subStrings[j][i] = inputString.substring(j, aux);
 				}else {
 					isComplete = true;
 				}
 			}
+			isComplete = false;
 		}
 		
 		printTable();
 	}
 	
 	public void printTable() {
-		for(int i = 0; i < subStrings.length-1; i++) {
-			for(int j = 0; j < subStrings.length-1; j++) {
-				System.err.println(subStrings[i][j] + " ");
+		
+		String aux = "";
+		
+		for(int i = 0; i < subStrings.length; i++) {
+			for(int j = 0; j < subStrings.length; j++) {
+				aux += subStrings[i][j] + " ";
 			}
-			System.out.println("\n");
+			aux +="\n";
 		}
+		
+		System.out.println(aux);
 	}
 }
