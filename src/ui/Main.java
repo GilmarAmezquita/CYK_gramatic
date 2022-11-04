@@ -29,7 +29,7 @@ public class Main {
 		
 		String inputString = "aab";
 		
-		Cyk testing = new Cyk(variableProduction, variables, inputString);
-		
+		Cyk testing = new Cyk(variableProduction, variables);
+		testing.isContained(inputString);
 	}
 }

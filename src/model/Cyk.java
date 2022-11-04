@@ -12,13 +12,10 @@ public class Cyk {
 	private String inputString;
 	private String[][] subStrings;
 	
-	public Cyk(HashMap<Character, List<String>> produccions, List<Character> variables, String inputString) {
+	public Cyk(HashMap<Character, List<String>> produccions, List<Character> variables) {
 		variableProduction = produccions;
 		this.variables = variables;
-		this.inputString = inputString;
 		productionVariable = new HashMap<>();
-		fillHashMap();
-		fillSubStringTable();
 	}
 	
 	private void fillHashMap() {
@@ -38,7 +35,7 @@ public class Cyk {
 		int aux = 0;
 		boolean isComplete = false;
 				
-		for(int i = 0; i < sizeOfInput; i++) {
+		for(int i = 0; i < sizeOfInput && !isComplete; i++) {
 			for(int j = 0;j < sizeOfInput && !isComplete; j++) {
 	
 				aux = i+j+1;
@@ -50,12 +47,11 @@ public class Cyk {
 			}
 			isComplete = false;
 		}
-		
-		printTable();
 	}
 	
-	public void printTable() {
+	public void printTable(String[][] array) {
 		
+		String[][] subStrings = array;
 		String aux = "";
 		
 		for(int i = 0; i < subStrings.length; i++) {
@@ -66,5 +62,54 @@ public class Cyk {
 		}
 		
 		System.out.println(aux);
+	}
+	
+	public boolean isContained(String inputString) {
+		this.inputString = inputString;
+		fillHashMap();
+		fillSubStringTable();
+		return cyk();
+	}
+	
+	private boolean cyk() {
+		
+		String[][] variables = new String[subStrings.length][subStrings.length];
+		String productionAux = "";
+		
+		for(int i = 0; i < subStrings.length; i++) {
+			for(int j = 0; j < subStrings.length; j++) {
+				productionAux = subStrings[j][i];
+				if(productionAux != null) {
+					variables[j][i] = readString(productionAux);
+				}
+			}
+		}
+			
+		printTable(variables);
+		
+		return true;
+	}
+	
+	private boolean EvaluarMatrix() {
+		
+		return true;
+	}
+	
+	private String readString(String string) {
+		
+		String variables = "";
+		char aux1;
+		int aux = 0;
+		
+		
+		for(int j = 0; j < string.length(); j++) {
+			aux = j+1;
+			aux1 = productionVariable.get(string.substring(j,aux));
+			if(aux1 != '\u0000'){
+				variables += aux1;
+			}
+		}
+		
+		return variables;
 	}
 }
