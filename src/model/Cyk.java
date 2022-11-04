@@ -21,7 +21,7 @@ public class Cyk {
 	
 	private void fillHashMap() {
 		
-		for(char variable :this.variables) {
+		for(char variable :variables) {
 			List<String> productions = variableProduction.get(variable);
 			for(String production: productions){
 				productionVariable.put(production, variable);
@@ -32,11 +32,20 @@ public class Cyk {
 	private void fillSubStringTable() {
 		
 		subStrings = new String[variables.size()][variables.size()];
-		List <String> productions = new ArrayList<>();
+		int sizeOfInput = inputString.length()-1;
+		int aux = 0;
+		boolean isComplete = false;
 		
-		do {
-			
-		} while (productions.listIterator().hasNext());
-		
+		for(int i = 0; i < sizeOfInput; i++) {
+			for(int j = 1;j < sizeOfInput && !isComplete; j++) {
+	
+				aux = i+j;
+				if(aux < sizeOfInput) {
+					subStrings[j][i] = inputString.substring(j, aux);
+				}else {
+					isComplete = true;
+				}
+			}
+		}
 	}
 }
