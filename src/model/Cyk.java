@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,16 +27,17 @@ public class Cyk {
 			List<String> productions = variableProduction.get(variable);
 			for(String production: productions){
 				if(productionVariable.containsKey(production)) {
+					var.clear();
 					var = productionVariable.get(production);
-					System.out.println(productionVariable.get(production));
+					
 					var.add(variable);
-					productionVariable.put(production, var);
+					productionVariable.put(production, new ArrayList<Character>(var));
 					System.out.println(production);
 					System.out.println(productionVariable.get(production));
 				} else {
 					var.clear();
 					var.add(variable);
-					productionVariable.put(production, var);
+					productionVariable.put(production, new ArrayList<Character>(var));
 					System.out.println(production);
 					System.out.println(productionVariable.get(production));
 				}
@@ -94,6 +96,7 @@ public class Cyk {
 		boolean isComplete = false;
 		
 		for(int i = 0; i < subStrings.length; i++) {
+			isComplete = false;
 			for(int j = 0; j < subStrings.length && !isComplete; j++) {
 				productionAux = subStrings[j][i];
 				if(productionAux != null) {
@@ -101,7 +104,6 @@ public class Cyk {
 				} else {
 					isComplete = true;
 				}
-				
 			}
 		}
 			
@@ -119,8 +121,6 @@ public class Cyk {
 		for(int j = 0; j < string.length(); j++) {
 			aux = j+1;
 			aux1 = productionVariable.get(string.substring(j,aux));
-			System.out.println(string.substring(j,aux));
-			System.out.println(productionVariable.get("a"));
 			if(!aux1.isEmpty()){
 				for(char temp: aux1){
 					variables += temp;
