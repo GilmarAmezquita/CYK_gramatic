@@ -24,7 +24,7 @@ public class Main {
 		String[] productions2 = {"AA", "a"};
 		variableProduction.put('A', Arrays.asList(productions2));
 
-		String[] productions3 = {"b"};
+		String[] productions3 = {"b", "a"};
 		variableProduction.put('B', Arrays.asList(productions3));
 		
 		String inputString = "aab";

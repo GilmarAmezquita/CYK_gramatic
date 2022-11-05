@@ -7,8 +7,8 @@ import java.util.List;
 public class Cyk {
 	
 	private List<Character> variables;
-	private HashMap<Character, List<String>> variableProduction;
-	private HashMap<String,Character> productionVariable;
+	private HashMap<Character, List<String>> variableProduction; //Sirve para obtener las producciones de cierta vriable
+	private HashMap<String,List<Character>> productionVariable; //Sirve para obtener la variable que genera cierta produccion
 	private String inputString;
 	private String[][] subStrings;
 	
@@ -18,17 +18,32 @@ public class Cyk {
 		productionVariable = new HashMap<>();
 	}
 	
-	private void fillHashMap() {
+	private void fillHashMap() { //Rellena el hashmap productionVariable 
+		
+		List<Character> var = new ArrayList<>();
 		
 		for(char variable :variables) {
 			List<String> productions = variableProduction.get(variable);
 			for(String production: productions){
-				productionVariable.put(production, variable);
+				if(productionVariable.containsKey(production)) {
+					var = productionVariable.get(production);
+					System.out.println(productionVariable.get(production));
+					var.add(variable);
+					productionVariable.put(production, var);
+					System.out.println(production);
+					System.out.println(productionVariable.get(production));
+				} else {
+					var.clear();
+					var.add(variable);
+					productionVariable.put(production, var);
+					System.out.println(production);
+					System.out.println(productionVariable.get(production));
+				}
 			}
 		}
 	}
 	
-	private void fillSubStringTable() {
+	private void fillSubStringTable() { //Rellena la tabla de sub-cadenas de la cadena de entrada
 		
 		int sizeOfInput = inputString.length();
 		subStrings = new String[sizeOfInput][sizeOfInput];
@@ -68,20 +83,25 @@ public class Cyk {
 		this.inputString = inputString;
 		fillHashMap();
 		fillSubStringTable();
+		printTable(subStrings);
 		return cyk();
 	}
 	
-	private boolean cyk() {
+	private boolean cyk() { //Algoritmo CYK
 		
 		String[][] variables = new String[subStrings.length][subStrings.length];
 		String productionAux = "";
+		boolean isComplete = false;
 		
 		for(int i = 0; i < subStrings.length; i++) {
-			for(int j = 0; j < subStrings.length; j++) {
+			for(int j = 0; j < subStrings.length && !isComplete; j++) {
 				productionAux = subStrings[j][i];
 				if(productionAux != null) {
 					variables[j][i] = readString(productionAux);
+				} else {
+					isComplete = true;
 				}
+				
 			}
 		}
 			
@@ -90,26 +110,31 @@ public class Cyk {
 		return true;
 	}
 	
-	private boolean EvaluarMatrix() {
-		
-		return true;
-	}
-	
 	private String readString(String string) {
 		
 		String variables = "";
-		char aux1;
+		List<Character> aux1;
 		int aux = 0;
-		
 		
 		for(int j = 0; j < string.length(); j++) {
 			aux = j+1;
 			aux1 = productionVariable.get(string.substring(j,aux));
-			if(aux1 != '\u0000'){
-				variables += aux1;
+			System.out.println(string.substring(j,aux));
+			System.out.println(productionVariable.get("a"));
+			if(!aux1.isEmpty()){
+				for(char temp: aux1){
+					variables += temp;
+				}
 			}
 		}
 		
 		return variables;
 	}
+	
+	private boolean EvaluarMatrix() {
+		
+		return true;
+	}
+	
+	
 }
