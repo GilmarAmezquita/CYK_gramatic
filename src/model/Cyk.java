@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Cyk {
 	
@@ -32,14 +33,10 @@ public class Cyk {
 					
 					var.add(variable);
 					productionVariable.put(production, new ArrayList<Character>(var));
-					System.out.println(production);
-					System.out.println(productionVariable.get(production));
 				} else {
 					var.clear();
 					var.add(variable);
 					productionVariable.put(production, new ArrayList<Character>(var));
-					System.out.println(production);
-					System.out.println(productionVariable.get(production));
 				}
 			}
 		}
@@ -66,14 +63,14 @@ public class Cyk {
 		}
 	}
 	
-	public void printTable(String[][] array) {
+	public void printTable(Object[][] array) {
 		
-		String[][] subStrings = array;
+		Object[][] subStrings = array;
 		String aux = "";
 		
 		for(int i = 0; i < subStrings.length; i++) {
 			for(int j = 0; j < subStrings.length; j++) {
-				aux += subStrings[i][j] + " ";
+				aux += ((subStrings[i][j] != null)?subStrings[i][j].toString():null) + " ";
 			}
 			aux +="\n";
 		}
@@ -93,22 +90,19 @@ public class Cyk {
 		
 		String[][] variables = new String[subStrings.length][subStrings.length];
 		String productionAux = "";
-		boolean isComplete = false;
 		
 		for(int i = 0; i < subStrings.length; i++) {
-			isComplete = false;
-			for(int j = 0; j < subStrings.length && !isComplete; j++) {
+			for(int j = 0; j < subStrings.length; j++) {
 				productionAux = subStrings[j][i];
 				if(productionAux != null) {
 					variables[j][i] = readString(productionAux);
-				} else {
-					isComplete = true;
 				}
 			}
 		}
 			
 		printTable(variables);
 		
+		evaluateInputs(variables);
 		return true;
 	}
 	
@@ -131,10 +125,71 @@ public class Cyk {
 		return variables;
 	}
 	
-	private boolean EvaluarMatrix() {
+	private boolean evaluateInputs(String[][] input) {
+		
+		ArrayList<String>[][] variables = new ArrayList[input.length][input.length];
+		ArrayList<String> components = new ArrayList<String>();
+		String lastInput = "";
+		String aux = "";
+		
+		for(int i = 0; i < input.length; i++) {
+			for(int j = 0; j < input.length; j++) {
+				if(i == 0) {
+					components.clear();
+					components.add(input[j][i]);
+					variables[j][i] = new ArrayList<>(components);
+				} else if (i == 1){
+					components.clear();
+					components.add((productionVariable.get(input[j][i]) != null)?productionVariable.get(input[j][i]).get(0).toString():"");
+					variables[j][i] = new ArrayList<>(components);
+				} else {
+					components.clear();
+					lastInput = input[j][i];
+					variables[j][i] = evaluateLastInput(lastInput, input, variables, j);
+				}
+			}
+		}
+		
+		printTable(variables);
+		
+		
 		
 		return true;
+	}	
+	
+	private ArrayList<String> evaluateLastInput(String lastInput, String[][] inputs, ArrayList<String>[][] variables, int row) {
+		
+		int start = row;
+		ArrayList<String> cm = new ArrayList<String>();
+		ArrayList<String> cmAux = new ArrayList<String>();
+		ArrayList<String> combinations = new ArrayList<String>();
+		String aux = "";
+		
+		if(lastInput != null) {
+			
+		int length = lastInput.length()-1;
+		
+			for(int i = 1; i <= length; i++) {
+				cmAux = variables[start][i-1];
+				if(!cmAux.isEmpty() && cmAux != null) {
+					for(int j = 0; j < cmAux.size(); j++) {
+						cm.add(cmAux.get(j));
+					}
+					cmAux = variables[i+start][length-i];
+					if(!cmAux.isEmpty()) {
+						for(int j = 0; j < cm.size(); j++) {
+							for(int k = 0; k < cmAux.size(); k++) {
+								aux = cm.get(j) + cmAux.get(k);
+							}
+							cm.remove(j);
+							combinations.add(aux);
+						}
+					} else {
+						cm.clear();
+					}
+				}
+			}
+		}
+		return combinations;
 	}
-	
-	
 }

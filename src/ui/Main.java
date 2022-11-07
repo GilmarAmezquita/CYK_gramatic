@@ -27,7 +27,7 @@ public class Main {
 		String[] productions3 = {"b"};
 		variableProduction.put('B', Arrays.asList(productions3));
 		
-		String inputString = "aab";
+		String inputString = "aaab";
 		
 		Cyk testing = new Cyk(variableProduction, variables);
 		testing.isContained(inputString);
