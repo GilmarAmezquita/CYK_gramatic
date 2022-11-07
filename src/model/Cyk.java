@@ -2,9 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Cyk {
 	
@@ -164,7 +167,7 @@ public class Cyk {
 		ArrayList<String> cmAux = new ArrayList<String>();
 		ArrayList<String> combinations = new ArrayList<String>();
 		String aux = "";
-		
+		String aux1 = "";
 		if(lastInput != null) {
 			
 		int length = lastInput.length()-1;
@@ -182,7 +185,17 @@ public class Cyk {
 								aux = cm.get(j) + cmAux.get(k);
 							}
 							cm.remove(j);
-							combinations.add(aux);
+							
+							if(!combinations.contains(aux1) && !combinations.contains(aux)) {
+								if(productionVariable.get(aux) != null) {
+									List<String> stringList = productionVariable.get(aux).stream()
+									        .map(Object::toString).collect(Collectors.toList());
+									combinations.addAll(stringList);
+									aux1 = combinations.get(0);
+								} else {
+									combinations.add(aux);
+								}
+							}
 						}
 					} else {
 						cm.clear();
