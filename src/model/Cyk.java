@@ -1,16 +1,13 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Cyk {
 	
+	private static final int INITIAL_VARIABLE = 0;
 	private List<Character> variables;
 	private HashMap<Character, List<String>> variableProduction; //Sirve para obtener las producciones de cierta vriable
 	private HashMap<String,List<Character>> productionVariable; //Sirve para obtener la variable que genera cierta produccion
@@ -102,12 +99,10 @@ public class Cyk {
 				}
 			}
 		}
-			
-		printTable(variables);
 		
-		evaluateInputs(variables);
-		return true;
+		return evaluateInputs(variables);
 	}
+	
 	
 	private String readString(String string) {
 		
@@ -130,10 +125,11 @@ public class Cyk {
 	
 	private boolean evaluateInputs(String[][] input) {
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<String>[][] variables = new ArrayList[input.length][input.length];
 		ArrayList<String> components = new ArrayList<String>();
 		String lastInput = "";
-		String aux = "";
+		List<String> lastVariableSet;
 		
 		for(int i = 0; i < input.length; i++) {
 			for(int j = 0; j < input.length; j++) {
@@ -153,12 +149,25 @@ public class Cyk {
 			}
 		}
 		
-		printTable(variables);
+		lastVariableSet = variables[INITIAL_VARIABLE][input.length-1];
 		
+		return evaluateLastVariableSet(lastVariableSet);
+	}
+	
+	private boolean evaluateLastVariableSet(List<String> lastSet) {
 		
+		int count = 0;
+		List<String> productions = variableProduction.get(this.variables.get(INITIAL_VARIABLE));
+		System.out.println(lastSet);
+		System.out.println(productions);
+		for(String element:lastSet) {
+			if(element.equals(this.variables.get(INITIAL_VARIABLE).toString())) {
+				count++;
+			}
+		}
 		
-		return true;
-	}	
+		return (count == productions.size())?true:false;
+	}
 	
 	private ArrayList<String> evaluateLastInput(String lastInput, String[][] inputs, ArrayList<String>[][] variables, int row) {
 		

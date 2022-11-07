@@ -18,18 +18,22 @@ public class Main {
 		variables.add('B');
 		
 		HashMap<Character,List<String>> variableProduction = new HashMap<>();
-		String[] productions1 = {"AB"};
+		String[] productions1 = {"BA","AC"};
 		variableProduction.put('S', Arrays.asList(productions1));
 		
-		String[] productions2 = {"AA", "a"};
+		String[] productions2 = {"CC", "b"};
 		variableProduction.put('A', Arrays.asList(productions2));
 
-		String[] productions3 = {"b"};
+		String[] productions3 = {"AB","a"};
 		variableProduction.put('B', Arrays.asList(productions3));
 		
-		String inputString = "aaaab";
+		String[] productions4 = {"BA","a"};
+		variableProduction.put('C', Arrays.asList(productions4));
+		
+		
+		String inputString = "bbab";
 		
 		Cyk testing = new Cyk(variableProduction, variables);
-		testing.isContained(inputString);
+		System.out.println(testing.isContained(inputString));
 	}
 }
