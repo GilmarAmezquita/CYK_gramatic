@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +22,15 @@ public class MainController {
     private ProductionController controller;
     
     public MainController() {
-    	controller = new ProductionController();
+    	
     }
     
     @FXML
-    public void addMachineOk(ActionEvent event) {
-    	if(alfabetField.getText().equals("")) {
+    public void addGrammarOk(ActionEvent event) {
+    	if(!alfabetField.getText().isEmpty() && !statesField.getText().isEmpty()) {
     		
-    	} else {
+    		getInfo();
+    		
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ProductionsScreen.fxml"));
     		
     		fxmlLoader.setController(controller);
@@ -46,6 +50,13 @@ public class MainController {
     			e.printStackTrace();
     		}
     	}
+    }
+    
+    private void getInfo() {
+    	List<String> alphabet = Arrays.asList(alfabetField.getText().split(","));
+    	List<String> variables = Arrays.asList(statesField.getText().split(","));
+    	
+    	controller = new ProductionController(alphabet, variables);
     }
 
 }

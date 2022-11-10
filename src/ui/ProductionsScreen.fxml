@@ -20,13 +20,13 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboProductions" layoutX="191.0" layoutY="100.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboProductions" layoutX="191.0" layoutY="100.0" onAction="#selectedProduction" prefWidth="150.0" />
       <Label layoutX="50.0" layoutY="140.0" text="Production Variable:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboProductions1" layoutX="191.0" layoutY="138.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboProductions1" layoutX="191.0" layoutY="138.0" onAction="#selectedProduction" prefWidth="150.0" />
       <Button layoutX="61.0" layoutY="232.0" mnemonicParsing="false" onAction="#addProduction" prefHeight="52.0" prefWidth="127.0" text="Add production">
          <font>
             <Font size="13.0" />
@@ -44,6 +44,6 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboTerminals" layoutX="191.0" layoutY="184.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboTerminals" layoutX="191.0" layoutY="184.0" onAction="#selectedProduction" prefWidth="150.0" />
    </children>
 </AnchorPane>

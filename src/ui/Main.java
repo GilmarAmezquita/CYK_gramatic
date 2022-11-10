@@ -61,6 +61,5 @@ private MainController controller;
 		String inputString = "bbab";
 		
 		Cyk testing = new Cyk(variableProduction, variables);
-		System.out.println(testing.isContained(inputString));
 	}
 }

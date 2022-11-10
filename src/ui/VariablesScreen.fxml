@@ -23,7 +23,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="230.0" layoutY="244.0" mnemonicParsing="false" onAction="#addMachineOk" prefHeight="45.0" prefWidth="136.0" text="Ok" />
+      <Button layoutX="230.0" layoutY="244.0" mnemonicParsing="false" onAction="#addGrammarOk" prefHeight="45.0" prefWidth="136.0" text="Ok" />
       <TextField fx:id="alfabetField" layoutX="298.0" layoutY="167.0" prefHeight="30.0" prefWidth="142.0" promptText="a,b,c - 1,2,3" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="167.0">
          <font>
             <Font size="15.0" />
